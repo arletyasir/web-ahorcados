@@ -1,0 +1,131 @@
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.ahorcado-container {
+  margin: 2rem auto;
+}
+
+svg {
+  stroke: #333;
+  stroke-width: 2;
+  fill: none;
+}
+
+.juego-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.palabra {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.letra {
+  font-size: 2rem;
+  font-weight: bold;
+  width: 2rem;
+  border-bottom: 2px solid #333;
+  text-align: center;
+}
+
+.intentos {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.teclado {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.fila-teclado {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.tecla {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.2rem;
+  background-color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.tecla:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+.tecla.adivinada {
+  background-color: #4caf50;
+  color: white;
+}
+
+.tecla.incorrecta {
+  background-color: #f44336;
+  color: white;
+}
+
+.mensaje {
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.mensaje.ganado {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.mensaje.perdido {
+  background-color: #ffcdd2;
+  color: #c62828;
+}
+
+.boton-reiniciar {
+  font-size: 1.2rem;
+  padding: 0.8rem 1.5rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.boton-reiniciar:hover {
+  background-color: #0d8bf2;
+}
+
+@media (max-width: 600px) {
+  .tecla {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+  
+  .letra {
+    font-size: 1.5rem;
+    width: 1.5rem;
+  }
+}
