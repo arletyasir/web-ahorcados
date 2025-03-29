@@ -1,54 +1,96 @@
-# React + TypeScript + Vite
+# Juego del Ahorcado
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Un juego clásico del Ahorcado implementado con React, TypeScript y Vite. Esta aplicación permite al usuario adivinar una palabra letra por letra, con la ayuda de pistas opcionales.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Selección aleatoria de palabras con pistas
+- Teclado virtual y soporte para teclado físico
+- Visualización gráfica del ahorcado
+- Sistema de pistas opcional
+- Interfaz responsiva y amigable
+- Contador de intentos restantes
+- Mensajes de victoria o derrota
 
-## Expanding the ESLint configuration
+## Tecnologías utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19
+- TypeScript
+- Vite
+- Firebase (para el despliegue)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Configuración del entorno local
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Clona el repositorio
+2. Instala las dependencias:
+   ```
+   npm install
+   ```
+3. Copia el archivo `.env.example` a `.env` y configura las variables de entorno de Firebase:
+   ```
+   cp .env.example .env
+   ```
+4. Ejecuta el proyecto en modo desarrollo:
+   ```
+   npm run dev
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Despliegue en Firebase
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Para desplegar esta aplicación en Firebase, sigue estos pasos:
+
+1. Crea un proyecto en [Firebase Console](https://console.firebase.google.com/)
+
+2. Instala Firebase CLI si no lo tienes:
+   ```
+   npm install -g firebase-tools
+   ```
+
+3. Inicia sesión en Firebase:
+   ```
+   firebase login
+   ```
+
+4. Actualiza el archivo `.firebaserc` con el ID de tu proyecto:
+   ```json
+   {
+     "projects": {
+       "default": "TU_ID_DE_PROYECTO"
+     }
+   }
+   ```
+
+5. Actualiza el archivo `.env` con los datos de tu proyecto Firebase. Puedes encontrar esta información en la configuración de tu proyecto en Firebase Console:
+   ```
+   VITE_FIREBASE_API_KEY=tu_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=tu_proyecto.firebaseapp.com
+   VITE_FIREBASE_PROJECT_ID=tu_proyecto
+   VITE_FIREBASE_STORAGE_BUCKET=tu_proyecto.appspot.com
+   VITE_FIREBASE_MESSAGING_SENDER_ID=tu_messaging_sender_id
+   VITE_FIREBASE_APP_ID=tu_app_id
+   VITE_FIREBASE_MEASUREMENT_ID=tu_measurement_id
+   ```
+
+6. Construye y despliega la aplicación:
+   ```
+   npm run deploy
+   ```
+
+7. Una vez completado, podrás acceder a tu aplicación en la URL proporcionada por Firebase.
+
+## Desarrollo
+
+- Para ejecutar el servidor de desarrollo:
+  ```
+  npm run dev
+  ```
+
+- Para construir la aplicación:
+  ```
+  npm run build
+  ```
+
+- Para previsualizar la versión construida:
+  ```
+  npm run preview
+  ```
