@@ -1,18 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import './App.css'
-
-const PALABRAS = [
-  'javascript', 'react', 'typescript', 'programacion',
-  'desarrollo', 'interfaz', 'componente', 'aplicacion',
-  'computadora', 'algoritmo', 'internet', 'navegador'
-]
-
+import { PALABRAS_CON_PISTAS } from './data/PALABRAS'
 // Número máximo de intentos fallidos permitidos
 const MAX_INTENTOS = 6
 
 function App() {
-  // Palabra que se debe adivinar
-  const [palabra, setPalabra] = useState('')
+  // Palabra actual con su pista
+  const [palabraActual, setPalabraActual] = useState({ palabra: '', pista: '' })
   
   // Letras adivinadas por el jugador
   const [letrasAdivinadas, setLetrasAdivinadas] = useState<Set<string>>(new Set())
@@ -22,22 +16,24 @@ function App() {
   
   // Estado del juego
   const [estadoJuego, setEstadoJuego] = useState<'jugando' | 'ganado' | 'perdido'>('jugando')
+  
+  // Mostrar pista
 
   // Inicializar el juego
   useEffect(() => {
     reiniciarJuego()
   }, [])
 
-  // Obtener una palabra aleatoria
+  // Obtener una palabra aleatoria con su pista
   const obtenerPalabraAleatoria = () => {
-    const indiceAleatorio = Math.floor(Math.random() * PALABRAS.length)
-    return PALABRAS[indiceAleatorio]
+    const indiceAleatorio = Math.floor(Math.random() * PALABRAS_CON_PISTAS.length)
+    return PALABRAS_CON_PISTAS[indiceAleatorio]
   }
 
   // Reiniciar el juego
   const reiniciarJuego = () => {
     const nuevaPalabra = obtenerPalabraAleatoria()
-    setPalabra(nuevaPalabra)
+    setPalabraActual(nuevaPalabra)
     setLetrasAdivinadas(new Set())
     setLetrasIncorrectas(new Set())
     setEstadoJuego('jugando')
@@ -45,9 +41,9 @@ function App() {
 
   // Verificar si el jugador ha ganado
   const verificarVictoria = useCallback(() => {
-    if (!palabra) return false
-    return [...palabra].every(letra => letrasAdivinadas.has(letra))
-  }, [palabra, letrasAdivinadas])
+    if (!palabraActual.palabra) return false
+    return [...palabraActual.palabra].every(letra => letrasAdivinadas.has(letra))
+  }, [palabraActual.palabra, letrasAdivinadas])
   
   // Verificar si el jugador ha perdido
   const verificarDerrota = useCallback(() => {
@@ -72,7 +68,7 @@ function App() {
     // Convertir la letra a minúscula
     const letraMinuscula = letra.toLowerCase()
     
-    if (palabra.includes(letraMinuscula)) {
+    if (palabraActual.palabra.includes(letraMinuscula)) {
       setLetrasAdivinadas(new Set([...letrasAdivinadas, letraMinuscula]))
     } else {
       setLetrasIncorrectas(new Set([...letrasIncorrectas, letraMinuscula]))
@@ -96,17 +92,27 @@ function App() {
 
   // Renderizar la palabra con guiones para las letras no adivinadas
   const renderizarPalabra = () => {
-    if (!palabra) return null
+    if (!palabraActual.palabra) return null
     
     return (
       <div className="palabra">
-        {[...palabra].map((letra, index) => (
+        {[...palabraActual.palabra].map((letra, index) => (
           <span key={index} className="letra">
             {letrasAdivinadas.has(letra) || estadoJuego === 'perdido' ? letra : '_'}
           </span>
         ))}
       </div>
     )
+  }
+
+  // Renderizar la pista
+  const renderizarPista = () => {
+    
+    return (
+      <div className="pista">
+        <strong>Pista:</strong> {palabraActual.pista}
+      </div>
+    );
   }
 
   // Renderizar el teclado virtual
@@ -181,7 +187,7 @@ function App() {
       return <div className="mensaje ganado">¡Felicidades! Has ganado.</div>
     } else if (estadoJuego === 'perdido') {
       return <div className="mensaje perdido">
-        Has perdido. La palabra era: <strong>{palabra}</strong>
+        Has perdido. La palabra era: <strong>{palabraActual.palabra}</strong>
       </div>
     }
     return null
@@ -199,6 +205,10 @@ function App() {
         <div className="intentos">
           Intentos restantes: {MAX_INTENTOS - letrasIncorrectas.size}
         </div>
+        
+        {renderizarPista()}
+        
+       
         
         {mensajeEstado()}
         
